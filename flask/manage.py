@@ -55,5 +55,14 @@ def test_one(test_file):
     else:
         return 1
 
+
+@manager.command
+def finance(market, ticker):
+
+    from project.services.financial_metrics import get_current_ratio
+
+    current_ratio = get_current_ratio(market, ticker)
+    print(current_ratio, flush=True)
+
 if __name__ == '__main__':
     manager.run()

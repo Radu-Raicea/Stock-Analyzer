@@ -52,8 +52,8 @@ class GoogleFinance(object):
         div_id = report_type + term + 'div'
         return self._financial('div#{} table#fs-table'.format(div_id))
 
-    def _statement(self, stmt_type, term):
-        tbl = self._get_table(stmt_type, term)
+    def _statement(self, statement_type, term):
+        tbl = self._get_table(statement_type, term)
         ret = []
         for row in tbl.items('tr'):
             data = [self._parse_number(i.text()) for i in row.items('th, td')]
