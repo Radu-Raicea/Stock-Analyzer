@@ -1,0 +1,50 @@
+version: '3'
+
+services:
+    postgres:
+      build: ./postgres
+      container_name: postgres
+      networks:
+        - net
+      environment:
+        - POSTGRES_USER=postgres
+        - POSTGRES_PASSWORD=postgres
+      volumes:
+        - postgres:/var/lib/postgresql/data
+
+    flask:
+      build: ./flask
+      container_name: flask
+      volumes:
+        - ./flask:/usr/src/app
+      networks:
+        - net
+      environment:
+        - APP_SETTINGS=config.DevelopmentConfig
+        - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/db_dev
+        - DATABASE_TEST_URL=postgresql://postgres:postgres@postgres:5432/db_test
+        - SECRET_KEY=stockanalyzer
+      depends_on:
+        - postgres
+      links:
+        - postgres
+      command: gunicorn --worker-class eventlet -w 1 -b 0.0.0.0:8000 manage:app
+
+    nginx:
+      build: ./nginx
+      container_name: nginx
+      ports:
+        - 80:80
+      restart: always
+      networks:
+        - net
+      volumes:
+        - ./flask/project/static:/usr/share/nginx/html/static
+      depends_on:
+        - flask
+
+volumes:
+  postgres:
+
+networks:
+  net:
