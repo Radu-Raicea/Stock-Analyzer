@@ -10,6 +10,7 @@ class Stock(GoogleFinance):
         self.inc = super().income_statement()
         self.bal = super().balance_sheet()
         self.cas = super().cash_flow()
+        self.data = super().stock_data()
 
     def generate_metrics(self):
         self.current_ratio = self._compute_current_ratio()
@@ -18,6 +19,7 @@ class Stock(GoogleFinance):
         self.debt_equity_ratio = self._compute_debt_equity_ratio()
         self.net_profit_margin = self._compute_net_profit_margin()
         self.free_cash_flow = self._compute_free_cash_flow()
+        self.price_to_earnings_ratio = self._get_price_to_earnings_ratio()
 
     def _compute_current_ratio(self):
         if self.bal and self.bal[10][0] == 'Total Current Assets' and self.bal[23][0] == 'Total Current Liabilities':
@@ -58,5 +60,11 @@ class Stock(GoogleFinance):
     def _compute_free_cash_flow(self):
         if self.cas and self.cas[7][0] == 'Cash from Operating Activities' and self.cas[8][0] == 'Capital Expenditures':
             return self.cas[7][1] + self.cas[8][1]
+        else:
+            return None
+
+    def _get_price_to_earnings_ratio(self):
+        if self.data and self.data['price_to_earnings']:
+            return self.data['price_to_earnings']
         else:
             return None

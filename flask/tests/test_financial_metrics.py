@@ -8,7 +8,7 @@ class TestFinancialMetrics(BaseTestCase):
 
     def test_generate_metrics(self):
         with self.client:
-            stock = Stock('NASDAQ', 'TSLA')
+            stock = Stock('NASDAQ', 'AAPL')
             stock.generate_metrics()
             self.assertTrue(stock.current_ratio)
             self.assertTrue(stock.quick_ratio)
@@ -16,6 +16,7 @@ class TestFinancialMetrics(BaseTestCase):
             self.assertTrue(stock.debt_equity_ratio)
             self.assertTrue(stock.net_profit_margin)
             self.assertTrue(stock.free_cash_flow)
+            self.assertTrue(stock.price_to_earnings_ratio)
 
     def test_current_ratio_success(self):
         with self.client:
@@ -86,6 +87,16 @@ class TestFinancialMetrics(BaseTestCase):
         with self.client:
             stock = Stock('NASDAQ', 'TSLAA')
             self.assertFalse(stock._compute_free_cash_flow())
+
+    def test_price_to_earnings_ratio_success(self):
+        with self.client:
+            stock = Stock('NASDAQ', 'AAPL')
+            self.assertTrue(stock._get_price_to_earnings_ratio())
+
+    def test_price_to_earnings_ratio_fail(self):
+        with self.client:
+            stock = Stock('NASDAQ', 'TSLAA')
+            self.assertFalse(stock._get_price_to_earnings_ratio())
 
 if __name__ == '__main__':
     unittest.main()
