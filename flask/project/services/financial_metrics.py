@@ -2,25 +2,27 @@
 from project.services.google_finance import GoogleFinance
 
 
-def get_google_finance_stock(market, ticker):
-    return GoogleFinance(market, ticker)
+class Stock(GoogleFinance):
 
+    def __init__(self, market, ticker):
+        super().__init__(market, ticker)
 
-def get_current_ratio(market, ticker):
+        self.inc = super().income_statement()
+        self.bal = super().balance_sheet()
+        self.cas = super().cash_flow()
 
-    report = get_google_finance_stock(market, ticker).balance_sheet()
+    def generate_metrics(self):
+        self.current_ratio = self._compute_current_ratio()
+        self.quick_ratio = self._compute_quick_ratio()
 
-    if report and report[10][0] == 'Total Current Assets' and report[23][0] == 'Total Current Liabilities':
-        return report[10][1] / report[23][1]
-    else:
-        return None
+    def _compute_current_ratio(self):
+        if self.bal and self.bal[10][0] == 'Total Current Assets' and self.bal[23][0] == 'Total Current Liabilities':
+            return self.bal[10][1] / self.bal[23][1]
+        else:
+            return None
 
-
-def get_quick_ratio(market, ticker):
-
-    report = get_google_finance_stock(market, ticker).balance_sheet()
-
-    if report and report[10][0] == 'Total Current Assets' and report[7][0] == 'Total Inventory' and report[23][0] == 'Total Current Liabilities':
-        return (report[10][1] - report[7][1]) / report[23][1]
-    else:
-        return None
+    def _compute_quick_ratio(self):
+        if self.bal and self.bal[10][0] == 'Total Current Assets' and self.bal[7][0] == 'Total Inventory' and self.bal[23][0] == 'Total Current Liabilities':
+            return (self.bal[10][1] - self.bal[7][1]) / self.bal[23][1]
+        else:
+            return None
