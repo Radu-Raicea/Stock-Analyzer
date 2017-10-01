@@ -1,5 +1,5 @@
 
-from project import create_app, logger
+from project import create_app, logger, db
 from flask_script import Manager
 import coverage
 import unittest
@@ -18,6 +18,10 @@ COV = coverage.coverage(
 COV.start()
 
 app = create_app()
+
+import project.models
+db.create_all(app=app)
+
 manager = Manager(app)
 
 
@@ -63,7 +67,7 @@ def finance(market, ticker):
     from project.services.google_finance import GoogleFinance
 
     google_finance = GoogleFinance(market, ticker)
-    report = google_finance.balance_sheet()
+    report = google_finance.income_statement()
     for x in report:
         print(x, flush=True)
 

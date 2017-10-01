@@ -1,6 +1,6 @@
 
-from flask import render_template, Blueprint
-
+from flask import render_template, Blueprint, request, redirect
+from project.services.stocks import add_stock, get_stock_metrics, remove_stock
 
 website_blueprint = Blueprint('website_blueprint', __name__)
 
