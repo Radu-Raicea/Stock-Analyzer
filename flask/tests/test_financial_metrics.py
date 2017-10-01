@@ -30,5 +30,17 @@ class TestFinancialMetrics(BaseTestCase):
             stock.generate_metrics()
             self.assertFalse(stock.quick_ratio)
 
+    def test_return_on_equity_success(self):
+        with self.client:
+            stock = Stock('NASDAQ', 'TSLA')
+            stock.generate_metrics()
+            self.assertTrue(stock.return_on_equity)
+
+    def test_return_on_equity_fail(self):
+        with self.client:
+            stock = Stock('NASDAQ', 'TSLAA')
+            stock.generate_metrics()
+            self.assertFalse(stock.return_on_equity)
+
 if __name__ == '__main__':
     unittest.main()
