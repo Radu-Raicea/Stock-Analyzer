@@ -20,7 +20,7 @@ script:
   - docker-compose run flask python manage.py cov
 
 after_success:
-  - codecov
+  - bash <(curl -s https://codecov.io/bash)
 
 after_script:
   - docker-compose down
