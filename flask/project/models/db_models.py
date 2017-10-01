@@ -3,12 +3,14 @@ from project import db
 from flask_sqlalchemy import SQLAlchemy
 
 
-class Numbercol(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    numbercol = db.Column(db.Integer)
+class StockListEntry(db.Model):
 
-    def __init__(self, numbercol):
-        self.numbercol = numbercol
+    market = db.Column(db.String(16), primary_key=True)
+    ticker = db.Column(db.String(16), primary_key=True)
+
+    def __init__(self, market, ticker):
+        self.market = market
+        self.ticker = ticker
 
     def __repr__(self):
-        return '<Numbercol Object %r>' % self.id
+        return '<Stock List Entry Object %s:%s>' % (self.market, self.ticker)
