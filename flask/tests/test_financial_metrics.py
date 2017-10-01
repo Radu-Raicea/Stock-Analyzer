@@ -15,6 +15,7 @@ class TestFinancialMetrics(BaseTestCase):
             self.assertTrue(stock.return_on_equity)
             self.assertTrue(stock.debt_equity_ratio)
             self.assertTrue(stock.net_profit_margin)
+            self.assertTrue(stock.free_cash_flow)
 
     def test_current_ratio_success(self):
         with self.client:
@@ -75,6 +76,16 @@ class TestFinancialMetrics(BaseTestCase):
         with self.client:
             stock = Stock('NASDAQ', 'TSLAA')
             self.assertFalse(stock._compute_net_profit_margin())
+
+    def test_free_cash_flow_success(self):
+        with self.client:
+            stock = Stock('NASDAQ', 'TSLA')
+            self.assertTrue(stock._compute_free_cash_flow())
+
+    def test_free_cash_flow_fail(self):
+        with self.client:
+            stock = Stock('NASDAQ', 'TSLAA')
+            self.assertFalse(stock._compute_free_cash_flow())
 
 if __name__ == '__main__':
     unittest.main()
