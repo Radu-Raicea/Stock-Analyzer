@@ -11,7 +11,8 @@ COV = coverage.coverage(
     include='project/*',
     omit=[
         'tests/*',
-        'project/website/*'
+        'project/website/*',
+        'project/__init__.py'
     ]
 )
 COV.start()
@@ -59,10 +60,12 @@ def test_one(test_file):
 @manager.command
 def finance(market, ticker):
 
-    from project.services.financial_metrics import get_current_ratio
+    from project.services.google_finance import GoogleFinance
 
-    current_ratio = get_current_ratio(market, ticker)
-    print(current_ratio, flush=True)
+    google_finance = GoogleFinance(market, ticker)
+    report = google_finance.balance_sheet()
+    for x in report:
+        print(x, flush=True)
 
 if __name__ == '__main__':
     manager.run()

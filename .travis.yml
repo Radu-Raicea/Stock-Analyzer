@@ -17,7 +17,10 @@ before_script:
   - sleep 10
 
 script:
-  - docker-compose run flask python manage.py test
+  - docker-compose run flask python manage.py cov
+
+after_success:
+  - codecov
 
 after_script:
   - docker-compose down

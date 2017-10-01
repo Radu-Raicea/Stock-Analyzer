@@ -1,6 +1,6 @@
 
 import unittest
-from tests.base_website import BaseTestCase
+from tests.base_test import BaseTestCase
 
 
 class TestWebsite(BaseTestCase):
