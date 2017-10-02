@@ -10,7 +10,7 @@ def add_stock(market, ticker):
         stock = Stock(market, ticker)
         stock.generate_metrics()
         if stock.data and stock.data['price']:
-            stock_list_entry = StockListEntry(market, ticker)
+            stock_list_entry = StockListEntry(market.upper(), ticker.upper())
             db.session.add(stock_list_entry)
             db.session.commit()
         return stock
