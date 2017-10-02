@@ -41,7 +41,7 @@
 </div>
 
 <center>
-    <table id="stocks_table" class="display">
+    <table id="stocks_table" class="display row-border">
         <thead>
             <tr>
                 <th>Market</th>
@@ -54,6 +54,7 @@
                 <th>Debt/Equity Ratio</th>
                 <th>Free Cash Flow</th>
                 <th>Net Profit Margin</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -69,6 +70,7 @@
                 <td>{{stock.debt_equity_ratio}}</td>
                 <td>{{stock.free_cash_flow}}</td>
                 <td>{{stock.net_profit_margin}}</td>
+                <td><button type="button" class="btn btn-group-sm" onclick="remove_stock('{{stock.market}}', '{{stock.ticker}}');">-</button></td>
             </tr>
             {% endfor %}
         </tbody>
