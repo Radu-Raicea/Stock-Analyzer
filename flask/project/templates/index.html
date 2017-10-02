@@ -47,6 +47,7 @@
                 <th>Market</th>
                 <th>Ticker</th>
                 <th>Price</th>
+                <th>Market Cap</th>
                 <th>Current Ratio</th>
                 <th>Quick Ratio</th>
                 <th>Return on Equity</th>
@@ -54,6 +55,7 @@
                 <th>Debt/Equity Ratio</th>
                 <th>Free Cash Flow</th>
                 <th>Net Profit Margin</th>
+                <th>Show Chart</th>
                 <th></th>
             </tr>
         </thead>
@@ -63,6 +65,7 @@
                 <td>{{stock.market}}</td>
                 <td>{{stock.ticker}}</td>
                 <td>{{stock.data['price']}}</td>
+                <td>{{stock.market_cap}}</td>
                 <td>{{stock.current_ratio}}</td>
                 <td>{{stock.quick_ratio}}</td>
                 <td>{{stock.return_on_equity}}</td>
@@ -70,12 +73,49 @@
                 <td>{{stock.debt_equity_ratio}}</td>
                 <td>{{stock.free_cash_flow}}</td>
                 <td>{{stock.net_profit_margin}}</td>
+                <td><button type="button" class="btn btn-group-sm" onclick="">+</button></td>
                 <td><button type="button" class="btn btn-group-sm" onclick="remove_stock('{{stock.market}}', '{{stock.ticker}}');">-</button></td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
 </center>
+
+<p></p>
+
+<script>
+function change_stock()
+{
+    var market = this.stock.market;
+    var ticket = this.stock.ticker;
+
+}
+
+</script>
+
+
+<div>
+
+<!-- TradingView Widget BEGIN -->
+<script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+<script type="text/javascript">
+new TradingView.widget({
+  "width": 980,
+  "height": 610,
+  "symbol": "{{stocks[0].market}}:{{stocks[0].ticker}}",
+  "interval": "D",
+  "timezone": "Etc/UTC",
+  "theme": "Light",
+  "style": "1",
+  "locale": "en",
+  "toolbar_bg": "#f1f3f6",
+  "enable_publishing": false,
+  "allow_symbol_change": true,
+  "hideideas": true
+});
+</script>
+<!-- TradingView Widget END -->
+</div>
 
 <script type="text/javascript" src="/static/js/script.js"></script>
 

@@ -41,3 +41,21 @@ def remove_stock(market, ticker):
             db.session.commit()
     except Exception as e:
         logger.error(traceback.format_exc())
+
+# def autochoose_market(market, ticker)
+#     try:
+        
+#             USlist = ['NASDAQ', 'NYSE', 'NYSEARCA', 'OTCBB', 'OTCMKTS']
+#             CAlist = ['TSE', 'CVE', 'CNSX']
+
+#             if market=='US'
+#                 foreach exchange in USlist
+#                     test= Stock(exchange, ticker)
+#                     if test.exists
+#                         return exchange
+                        
+#             elif market== 'CA'
+#                 foreach exchange in CAlist
+#                     test= Stock(exchange, ticker)
+#                     if test.exists
+#                         return exchange

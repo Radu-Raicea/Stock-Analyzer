@@ -21,6 +21,7 @@ class Stock(GoogleFinance):
         self.net_profit_margin = self._compute_net_profit_margin()
         self.free_cash_flow = self._compute_free_cash_flow()
         self.price_to_earnings_ratio = self._get_price_to_earnings_ratio()
+        self.market_cap = self._get_market_cap()
 
     @staticmethod
     def _round_decimal(number):
@@ -97,3 +98,12 @@ class Stock(GoogleFinance):
                 return None
         except Exception as e:
             return None
+
+    def _get_market_cap(self):
+        try:
+            if self.data['market_cap']:
+                return self.data['market_cap']
+            else:
+                return None
+        except Exception as e:
+            return None            
