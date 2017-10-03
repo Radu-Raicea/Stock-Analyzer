@@ -4,9 +4,29 @@
 
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css">
 
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
+
+<script type="text/javascript">
+    $(function(){
+        $.get("/stocks", function(data, status){
+            var data = JSON.parse(data);
+            for (i in data) {
+                var stock = data[i];
+                for (var key in stock){
+                    if (stock.hasOwnProperty(key)){
+                        var value = stock[key];
+                        if (value == null){
+                            value = 'N/A';
+                        }
+                        $("#" + stock["market"] + "-" + stock["ticker"] + "-" + key).text(value);
+                    }
+                }
+            }
+        });
+    });
+</script>
 
 <div style="margin: 10px;">
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addStock">
@@ -62,19 +82,42 @@
         <tbody>
             {% for stock in stocks: %}
             <tr>
-                <td>{{stock.market}}</td>
-                <td>{{stock.ticker}}</td>
-                <td>{{stock.data['price']}}</td>
-                <td>{{stock.market_cap}}</td>
-                <td>{{stock.current_ratio}}</td>
-                <td>{{stock.quick_ratio}}</td>
-                <td>{{stock.return_on_equity}}</td>
-                <td>{{stock.price_to_earnings_ratio}}</td>
-                <td>{{stock.debt_equity_ratio}}</td>
-                <td>{{stock.free_cash_flow}}</td>
-                <td>{{stock.net_profit_margin}}</td>
-                <td><button type="button" id="chart-button" class="btn btn-group-sm" onclick="initTradingView('{{stock.market}}', '{{stock.ticker}}');">+</button></td>
-                <td><button type="button" class="btn btn-group-sm" onclick="remove_stock('{{stock.market}}', '{{stock.ticker}}');">-</button></td>
+                <td id="{{stock['market']}}-{{stock['ticker']}}-market">
+                    {{stock['market']}}
+                </td>
+                <td id="{{stock['market']}}-{{stock['ticker']}}-ticker">
+                    {{stock['ticker']}}
+                </td>
+                <td id="{{stock['market']}}-{{stock['ticker']}}-price">
+                    {{stock['price']}}
+                </td>
+                <td id="{{stock['market']}}-{{stock['ticker']}}-current_ratio">
+                    {{stock['current_ratio']}}
+                </td>
+                <td id="{{stock['market']}}-{{stock['ticker']}}-quick_ratio">
+                    {{stock['quick_ratio']}}
+                </td>
+                <td id="{{stock['market']}}-{{stock['ticker']}}-return_on_equity">
+                    {{stock['return_on_equity']}}
+                </td>
+                <td id="{{stock['market']}}-{{stock['ticker']}}-price_to_earnings_ratio">
+                    {{stock['price_to_earnings_ratio']}}
+                </td>
+                <td id="{{stock['market']}}-{{stock['ticker']}}-debt_equity_ratio">
+                    {{stock['debt_equity_ratio']}}
+                </td>
+                <td id="{{stock['market']}}-{{stock['ticker']}}-free_cash_flow">
+                    {{stock['free_cash_flow']}}
+                </td>
+                <td id="{{stock['market']}}-{{stock['ticker']}}-net_profit_margin">
+                    {{stock['net_profit_margin']}}
+                </td>
+                <td id="{{stock['market']}}-{{stock['ticker']}}-remove">
+                    <button type="button" class="btn btn-group-sm" onclick="initTradingView('{{stock.market}}', '{{stock.ticker}}');">-</button>
+                </td>
+                <td id="{{stock['market']}}-{{stock['ticker']}}-remove">
+                    <button type="button" class="btn btn-group-sm" onclick="remove_stock('{{stock['market']}}', '{{stock['ticker']}}');">-</button>
+                </td>
             </tr>
             {% endfor %}
         </tbody>
