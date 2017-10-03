@@ -14,13 +14,13 @@ class Stock(GoogleFinance):
         self.data = super().stock_data()
 
     def generate_metrics(self):
-        self.current_ratio = self._compute_current_ratio()
-        self.quick_ratio = self._compute_quick_ratio()
-        self.return_on_equity = self._compute_return_on_equity()
-        self.debt_equity_ratio = self._compute_debt_equity_ratio()
-        self.net_profit_margin = self._compute_net_profit_margin()
-        self.free_cash_flow = self._compute_free_cash_flow()
-        self.price_to_earnings_ratio = self._get_price_to_earnings_ratio()
+        self.data['current_ratio'] = self._compute_current_ratio()
+        self.data['quick_ratio'] = self._compute_quick_ratio()
+        self.data['return_on_equity'] = self._compute_return_on_equity()
+        self.data['debt_equity_ratio'] = self._compute_debt_equity_ratio()
+        self.data['net_profit_margin'] = self._compute_net_profit_margin()
+        self.data['free_cash_flow'] = self._compute_free_cash_flow()
+        self.data['price_to_earnings_ratio'] = self._get_price_to_earnings_ratio()
 
     @staticmethod
     def _round_decimal(number):
