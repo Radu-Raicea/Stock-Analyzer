@@ -73,7 +73,7 @@
                 <td>{{stock.debt_equity_ratio}}</td>
                 <td>{{stock.free_cash_flow}}</td>
                 <td>{{stock.net_profit_margin}}</td>
-                <td><button type="button" class="btn btn-group-sm" onclick="">+</button></td>
+                <td><button type="button" id="chart-button" class="btn btn-group-sm" onclick="initTradingView('{{stock.market}}', '{{stock.ticker}}');">+</button></td>
                 <td><button type="button" class="btn btn-group-sm" onclick="remove_stock('{{stock.market}}', '{{stock.ticker}}');">-</button></td>
             </tr>
             {% endfor %}
@@ -83,39 +83,37 @@
 
 <p></p>
 
-<script>
-function change_stock()
-{
-    var market = this.stock.market;
-    var ticket = this.stock.ticker;
+<script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+<div id="chart">
+    
+</div>
+<script type="text/javascript">
+
+var initTradingView = function(market, ticker) {
+
+ new TradingView.WidgetPopup({
+              "width": 980,
+              "height": 610,
+              "symbol":  market + `:` + ticker,
+              "interval": "D",
+              "timezone": "Etc/UTC",
+              "theme": "Light",
+              "style": "1",
+              "locale": "en",
+              "toolbar_bg": "#f1f3f6",
+              "enable_publishing": false,
+              "allow_symbol_change": true,
+              "hideideas": true});
+
 
 }
 
+
+
 </script>
 
 
-<div>
 
-<!-- TradingView Widget BEGIN -->
-<script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
-<script type="text/javascript">
-new TradingView.widget({
-  "width": 980,
-  "height": 610,
-  "symbol": "{{stocks[0].market}}:{{stocks[0].ticker}}",
-  "interval": "D",
-  "timezone": "Etc/UTC",
-  "theme": "Light",
-  "style": "1",
-  "locale": "en",
-  "toolbar_bg": "#f1f3f6",
-  "enable_publishing": false,
-  "allow_symbol_change": true,
-  "hideideas": true
-});
-</script>
-<!-- TradingView Widget END -->
-</div>
 
 <script type="text/javascript" src="/static/js/script.js"></script>
 
