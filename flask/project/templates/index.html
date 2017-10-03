@@ -76,7 +76,7 @@
                 <th>Free Cash Flow</th>
                 <th>Net Profit Margin</th>
                 <th>Show Chart</th>
-                <th></th>
+                <th>Delete</th>
             </tr>
         </thead>
         <tbody>
@@ -90,6 +90,9 @@
                 </td>
                 <td id="{{stock['market']}}-{{stock['ticker']}}-price">
                     {{stock['price']}}
+                </td>
+                <td id="{{stock['market']}}-{{stock['ticker']}}-market_cap">
+                    {{stock['market_cap']}}
                 </td>
                 <td id="{{stock['market']}}-{{stock['ticker']}}-current_ratio">
                     {{stock['current_ratio']}}
@@ -113,7 +116,7 @@
                     {{stock['net_profit_margin']}}
                 </td>
                 <td id="{{stock['market']}}-{{stock['ticker']}}-remove">
-                    <button type="button" class="btn btn-group-sm" onclick="initTradingView('{{stock.market}}', '{{stock.ticker}}');">-</button>
+                    <button type="button" class="btn btn-group-sm" onclick="initTradingView('{{stock['market']}}', '{{stock['ticker']}}');">-</button>
                 </td>
                 <td id="{{stock['market']}}-{{stock['ticker']}}-remove">
                     <button type="button" class="btn btn-group-sm" onclick="remove_stock('{{stock['market']}}', '{{stock['ticker']}}');">-</button>
@@ -127,36 +130,26 @@
 <p></p>
 
 <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
-<div id="chart">
-    
-</div>
+
+<div id="chart"></div>
+
 <script type="text/javascript">
-
-var initTradingView = function(market, ticker) {
-
- new TradingView.WidgetPopup({
-              "width": 980,
-              "height": 610,
-              "symbol":  market + `:` + ticker,
-              "interval": "D",
-              "timezone": "Etc/UTC",
-              "theme": "Light",
-              "style": "1",
-              "locale": "en",
-              "toolbar_bg": "#f1f3f6",
-              "enable_publishing": false,
-              "allow_symbol_change": true,
-              "hideideas": true});
-
-
-}
-
-
-
+    var initTradingView = function(market, ticker) {
+        new TradingView.WidgetPopup({
+            "width": 980,
+            "height": 610,
+            "symbol":  market + ":" + ticker,
+            "interval": "D",
+            "timezone": "Etc/UTC",
+            "theme": "Light",
+            "style": "1",
+            "locale": "en",
+            "toolbar_bg": "#f1f3f6",
+            "enable_publishing": false,
+            "allow_symbol_change": true,
+            "hideideas": true});
+    }
 </script>
-
-
-
 
 <script type="text/javascript" src="/static/js/script.js"></script>
 
