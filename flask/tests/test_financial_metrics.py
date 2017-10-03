@@ -19,6 +19,10 @@ class TestFinancialMetrics(BaseTestCase):
             self.assertTrue(stock.data['free_cash_flow'])
             self.assertTrue(stock.data['price_to_earnings_ratio'])
 
+            stock = Stock('NASDAQ', 'AAPLL')
+            stock.generate_metrics()
+            self.assertFalse(stock.data)
+
     def test_current_ratio_success(self):
         with self.client:
             stock = Stock('NASDAQ', 'TSLA')
