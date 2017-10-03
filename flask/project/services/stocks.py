@@ -31,17 +31,8 @@ def get_stocks_from_google():
             for key, value in stock.data.items():
                 setattr(stock_list_entry, key, value)
 
-            stock_dict = {
-                'market': stock.market,
-                'ticker': stock.ticker
-            }
-
-            for key, value in stock.data.items():
-                stock_dict[key] = value
-
-            stocks.append(stock_dict)
-
-        db.session.commit()
+            db.session.commit()
+            stocks.append(object_to_dict(stock_list_entry))
 
         return stocks
     except Exception as e:
