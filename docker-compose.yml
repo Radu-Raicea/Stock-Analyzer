@@ -15,6 +15,7 @@ services:
     flask:
       build: ./flask
       container_name: flask
+      restart: always
       volumes:
         - ./flask:/usr/src/app
       networks:

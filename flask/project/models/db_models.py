@@ -8,6 +8,7 @@ class StockListEntry(db.Model):
     market = db.Column(db.String(16), primary_key=True)
     ticker = db.Column(db.String(16), primary_key=True)
     price = db.Column(db.Float)
+    market_cap = db.Column(db.String(16))
     current_ratio = db.Column(db.Float)
     quick_ratio = db.Column(db.Float)
     return_on_equity = db.Column(db.Float)
