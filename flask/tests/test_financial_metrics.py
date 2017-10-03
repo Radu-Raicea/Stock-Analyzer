@@ -10,13 +10,14 @@ class TestFinancialMetrics(BaseTestCase):
         with self.client:
             stock = Stock('NASDAQ', 'AAPL')
             stock.generate_metrics()
-            self.assertTrue(stock.current_ratio)
-            self.assertTrue(stock.quick_ratio)
-            self.assertTrue(stock.return_on_equity)
-            self.assertTrue(stock.debt_equity_ratio)
-            self.assertTrue(stock.net_profit_margin)
-            self.assertTrue(stock.free_cash_flow)
-            self.assertTrue(stock.price_to_earnings_ratio)
+            self.assertTrue(stock.data['price'])
+            self.assertTrue(stock.data['current_ratio'])
+            self.assertTrue(stock.data['quick_ratio'])
+            self.assertTrue(stock.data['return_on_equity'])
+            self.assertTrue(stock.data['debt_equity_ratio'])
+            self.assertTrue(stock.data['net_profit_margin'])
+            self.assertTrue(stock.data['free_cash_flow'])
+            self.assertTrue(stock.data['price_to_earnings_ratio'])
 
     def test_current_ratio_success(self):
         with self.client:

@@ -1,7 +1,7 @@
 
 import unittest
 from tests.base_database_test import BaseTestCase
-from project.services.stocks import add_stock, get_stock_metrics, remove_stock
+from project.services.stocks import add_stock, get_stocks_from_google, get_stocks_from_db, remove_stock
 from project.models.db_models import StockListEntry
 
 
@@ -19,9 +19,14 @@ class TestStocksDatabase(BaseTestCase):
             stock = StockListEntry.query.filter_by(market='NASDAQ', ticker='AAPLLL').first()
             self.assertFalse(stock)
 
-    def test_get_stock_metrics(self):
+    def test_get_stocks_from_google(self):
         with self.client:
-            stocks = get_stock_metrics()
+            stocks = get_stocks_from_google()
+            self.assertEqual(stocks, [])
+
+    def test_get_stocks_from_db(self):
+        with self.client:
+            stocks = get_stocks_from_db()
             self.assertEqual(stocks, [])
 
     def test_remove_stock_successful(self):
