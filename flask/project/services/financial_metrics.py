@@ -100,4 +100,4 @@ class Stock(GoogleFinance):
             else:
                 return None
         except Exception as e:
-            return None
+            return None           
